@@ -351,12 +351,12 @@ async function sendMessage() {
     
     let input = document.getElementById("userInput");
     let message = input.value.trim();
+    if (message === "") return;
+
     chatHistory.push({
     role: "user",
     content: message
 });
-
-    if (message === "") return;
 
     let subject = document.getElementById("subject").value; // 
 
@@ -382,12 +382,13 @@ async function sendMessage() {
     chatBox.scrollTop = chatBox.scrollHeight;
 
     try {
-        const response = await fetch("http://127.0.0.1:3000/chat", {
+        const response = await fetch("/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
            body: JSON.stringify({
+    message: message,
     history: chatHistory,
     subject: subject
 })

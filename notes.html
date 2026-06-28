@@ -222,6 +222,7 @@ button:hover,
 
                     <div class="buttons">
                         <button onclick="generateApiNotes()">Generate Notes</button>
+                        <button onclick="improveNotes()">Improve Notes</button>
                         <button class="secondary" onclick="clearAll()">Clear</button>
                         <button onclick="copyNotes()">Copy</button>
                     </div>
@@ -247,7 +248,7 @@ async function generateApiNotes() {
     loader.style.display = "block";
 
     try {
-        const response = await fetch("http://127.0.0.1:3000/chat", {
+        const response = await fetch("/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -267,6 +268,36 @@ async function generateApiNotes() {
     } catch (error) {
         document.getElementById("outputText").value =
             "❌ Error: Make sure server is running";
+    }
+
+    loader.style.display = "none";
+}
+
+async function improveNotes() {
+    const outputEl = document.getElementById("outputText");
+    const text = outputEl.value.trim();
+
+    if (!text) return alert("Generate or enter notes first");
+
+    const loader = document.getElementById("loader");
+    loader.style.display = "block";
+
+    try {
+        const response = await fetch("/improve-notes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                text,
+                history: []
+            })
+        });
+
+        const data = await response.json();
+        outputEl.value = data.reply || "No response from AI";
+    } catch (error) {
+        outputEl.value = "❌ Error: Unable to improve notes right now";
     }
 
     loader.style.display = "none";

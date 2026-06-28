@@ -4,11 +4,33 @@ const fs = require("fs");
 
 // OpenRouter API key from environment variable
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('.')); // Serve static files from current directory
+
+async function getAIReply(systemPrompt, history, userMessage) {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: "openrouter/auto",
+            messages: [
+                { role: "system", content: systemPrompt },
+                ...history,
+                { role: "user", content: userMessage }
+            ]
+        })
+    });
+
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || "No response from AI";
+}
 
 app.post("/chat", async (req, res) => {
 
@@ -30,33 +52,42 @@ app.post("/chat", async (req, res) => {
     }
 
     try {
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                model: "openrouter/auto",
-                messages: [
-                    { role: "system", content: systemPrompt },
-                    ...history,
-                    { role: "user", content: userMessage } 
-                ]
-            })
-        });
+        if (!OPENROUTER_API_KEY) {
+            return res.status(500).json({ reply: "Server is missing OPENROUTER_API_KEY" });
+        }
 
-        const data = await response.json();
-
-        console.log("API RESPONSE:", data);
-
-        res.json({
-            reply: data.choices?.[0]?.message?.content || "No response from AI"
-        });
+        const reply = await getAIReply(systemPrompt, history, userMessage);
+        res.json({ reply });
 
     } catch (error) {
         console.log(error);
         res.json({ reply: "Something went wrong 😢" });
+    }
+});
+
+app.post("/improve-notes", async (req, res) => {
+    const text = req.body.text || req.body.message;
+    const history = (req.body.history || []).slice(-6);
+
+    if (!text) {
+        return res.status(400).json({ reply: "No notes text provided" });
+    }
+
+    try {
+        if (!OPENROUTER_API_KEY) {
+            return res.status(500).json({ reply: "Server is missing OPENROUTER_API_KEY" });
+        }
+
+        const reply = await getAIReply(
+            "You are a study notes improver. Rewrite notes to be clearer, concise, and exam-ready with bullet points.",
+            history,
+            text
+        );
+
+        res.json({ reply });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ reply: "Something went wrong while improving notes" });
     }
 });
 
@@ -114,5 +145,5 @@ function getCurrentPeriod(date) {
     return date.getDate() < 8 ? 'week' : 'month';
 }
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

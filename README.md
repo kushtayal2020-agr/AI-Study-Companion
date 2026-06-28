@@ -89,7 +89,13 @@ AI-STUDY-COMPANION/
 npm install
 ```
 
-3. Start the server:
+3. Set your own OpenRouter API key (required for chatbot and notes AI features):
+
+```id="envkey1"
+set OPENROUTER_API_KEY=YOUR_OPENROUTER_API_KEY
+```
+
+4. Start the server:
 
 ```id="6dks9c"
 node server.js

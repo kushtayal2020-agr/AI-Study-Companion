@@ -89,15 +89,7 @@ AI-STUDY-COMPANION/
 npm install
 ```
 
-3. Add your own OpenRouter API key before running locally.
-
-	In server.js, set:
-
-	const OPENROUTER_API_KEY = "YOUR_OPENROUTER_API_KEY";
-
-	This key is required for both the chatbot and the notes generator features.
-
-4. Start the server:
+3. Start the server:
 
 ```id="6dks9c"
 node server.js

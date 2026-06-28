@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 
-// Add your OpenRouter API key here before running locally
+// OpenRouter API key from environment variable
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 const app = express();

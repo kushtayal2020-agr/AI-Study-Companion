@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Study Companion - personalized study plans, AI chatbot assistance, and productivity tools for students.">
+    <title>AI-Study Companion</title>
+    <!-- Google Fonts preconnect and import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="logo.png" alt="AI-Study Companion Logo">
+                    <p>AI-Study Companion</p>
+                </a>
+            </div>
+            <div class="menu">
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="planner.html">Study Planner</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="chatbot.html">Chatbot</a>
+            </div>
+            <div class="auth" id="authSection">
+                <a href="login.html">Login</a>
+                <a href="signup.html">Sign Up</a>
+            </div>
+
+            <div id="profileSection" style="display:none; position:relative;">
+                <div id="profileIcon" class="avatar"></div>
+                <div id="dropdownMenu" class="dropdown">
+                    <div class="user-info">
+                        <p id="userName"></p>
+                        <p id="userEmail"></p>
+                        <button id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+            </div>
+        
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="typing">Build smarter study habits with AI guidance</h1>
+                <p class="hero-para">Track goals, schedule focused sessions, and get quick answers from the chatbot. Designed by students for students.</p>
+                <div class="hero-btns">
+                    <button class="hero" id="get-started" onclick="handleGetStarted()">Get Started</button>
+                    <button class="hero" onclick="window.location.href='features.html'">Learn More</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards -->
+        <section class="features-section">
+            <div class="cards">
+                        <div class="feature-card">
+                            <i class="fa-regular fa-calendar"></i>
+                            <h3>AI Study Planner</h3>
+                            <p>Get personalized study schedules optimized for your learning style and goals.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fa-regular fa-message"></i>
+                            <h3>AI Chatbot Assistant</h3>
+                            <p>Ask questions anytime and get instant help with your studies from our AI assistant.</p>
+                    </div>
+                        <div class="feature-card">
+                            <i class="fa-regular fa-lightbulb"></i>
+                            <h3>Smart Productivity Tips</h3>
+                            <p>Receive intelligent recommendations to boost your study efficiency and retention.</p>
+                    </div>
+                    <div class="feature-card">
+                            <i class="fa-regular fa-clock"></i>
+                            <h3>Personalized Timetable</h3>
+                            <p>Dynamic timetables that adapt to your progress and upcoming deadlines.</p>
+                            </div>
+                            </div>
+</section>
+    </main>
+
+  <footer class="footer">
+  <div class="footer-container">
+    
+    <div class="footer-col logo-box">
+      <div class="logo-row">
+        
+        <h3>AI Study Companion</h3>
+      </div>
+      <p>Smart tools to help students plan studies, stay productive, and achieve their goals.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="planner.html">Study Planner</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="help.html">Help Center</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <i class="fa-brands fa-github"></i>
+        <i class="fa-brands fa-linkedin"></i>
+        <i class="fa-brands fa-twitter"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026 AI Study Companion. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+const user = JSON.parse(localStorage.getItem("currentUser"));
+
+const authSection = document.getElementById("authSection");
+const profileSection = document.getElementById("profileSection");
+const profileIcon = document.getElementById("profileIcon");
+const dropdown = document.getElementById("dropdownMenu");
+
+if (user) {
+    authSection.style.display = "none";
+    profileSection.style.display = "block";
+
+    document.getElementById("userName").textContent = user.name;
+    document.getElementById("userEmail").textContent = user.email;
+
+    // Avatar color
+    const colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#6A5ACD"];
+    const randomColor = colors[user.name.length % colors.length];
+
+    profileIcon.style.background = randomColor;
+    profileIcon.textContent = user.name.charAt(0).toUpperCase();
+} else {
+    authSection.style.display = "block";
+    profileSection.style.display = "none";
+}
+
+profileIcon.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent instant close
+    dropdown.classList.toggle("show");
+});
+
+dropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+
+document.addEventListener("click", () => {
+    dropdown.classList.remove("show");
+});
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    console.log("Logout clicked"); // debug
+
+    localStorage.removeItem("currentUser");
+
+    // small delay ensures event completes
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 100);
+});
+function handleGetStarted() {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (user) {
+        // User already logged in
+        window.location.href = "dashboard.html";
+    } else {
+        // New user
+        window.location.href = "signup.html";
+    }
+}
+</script>
+<script src="theme.js"></script>
+</body>
+</html>

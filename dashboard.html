@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Study Companion</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2 class="logo">AI Study Companion</h2>
+        <ul>
+            <a href="index.html"> <li>🏠 Home</li></a>
+            <a href="planner.html"><li>📅 Planner</li></a>
+            <a href="progress.html"><li>📊 Progress</li></a>
+            <a href="notes.html"><li>📚 Notes</li></a>
+            <a href="dashboard.html"><li id="dashboard">🏠 Dashboard</li></a>
+            <a href="chatbot.html"><li>🤖 Chatbot</li></a>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <h1 id="welcomeText">Welcome 👋</h1>
+           <div id="profileSection" style="position: relative;">
+    <div id="profileIcon" class="avatar"></div>
+
+    <div id="dropdownMenu" class="dropdown">
+        <div class="user-info">
+    <p id="userName"></p>
+    <p id="userEmail"></p>
+</div>
+<button onclick="logout()">Logout</button>
+    </div>
+</div>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+
+            <div class="card">
+                <h3>📅 Study Planner</h3>
+                <p>Plan your daily study tasks</p>
+                <a href="planner.html"><button>Open</button></a>
+            </div>
+
+            <div class="card">
+                <h3>📊 Progress Tracker</h3>
+                <p>Track your performance</p>
+                <a href="progress.html"><button>View</button></a>
+            </div>
+
+            <div class="card">
+                <h3>📚 Notes Generator</h3>
+                <p>Convert PDFs into notes</p>
+                <a href="notes.html"><button>Open</button></a>
+            </div>
+
+            <div class="card">
+                <h3>🤖 AI Assistant</h3>
+                <p>Ask anything instantly</p>
+                <a href="chatbot.html"><button>Start</button></a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="auth.js"></script>
+<script>
+
+
+// Safety check (in case auth.js missed)
+if (!user) {
+    window.location.href = "login.html";
+}
+
+// 🔥 Welcome text
+document.getElementById("welcomeText").textContent =
+    "Welcome, " + user.name + " 👋";
+
+// 🔥 Profile info
+document.getElementById("userName").textContent = user.name;
+document.getElementById("userEmail").textContent = user.email;
+
+// 🔥 Avatar (first letter)
+const profileIcon = document.getElementById("profileIcon");
+profileIcon.textContent = user.name.charAt(0).toUpperCase();
+
+// Optional: random color avatar
+const colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A", "#6A5ACD"];
+profileIcon.style.background = colors[user.name.length % colors.length];
+
+// 🔥 Dropdown toggle
+const dropdown = document.getElementById("dropdownMenu");
+
+profileIcon.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent instant close
+    dropdown.classList.toggle("show");
+});
+
+// Prevent closing when clicking inside dropdown
+dropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+
+// Close dropdown when clicking outside
+document.addEventListener("click", () => {
+    dropdown.classList.remove("show");
+});
+
+// 🔥 Logout function
+function logout() {
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+}
+</script>
+<script src="theme.js"></script>
+</body>
+</html>

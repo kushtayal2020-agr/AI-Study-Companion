@@ -1,0 +1,50 @@
+{
+  "progress": {
+    "week": {
+      "hours": 18,
+      "tasks": 24,
+      "streak": 7,
+      "score": 82,
+      "bars": [2, 3.5, 2.5, 4, 1.5, 3, 1.5],
+      "barLabels": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    },
+    "month": {
+      "hours": 64,
+      "tasks": 87,
+      "streak": 14,
+      "score": 78,
+      "bars": [4, 6, 8, 5, 9, 7, 10, 6, 8, 5, 7, 9, 6, 8, 5, 3, 7, 10, 8, 6, 5, 7, 9, 4, 8, 7, 6, 5, 8, 7],
+      "barLabels": ["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14", "D15", "D16", "D17", "D18", "D19", "D20", "D21", "D22", "D23", "D24", "D25", "D26", "D27", "D28", "D29", "D30"]
+    },
+    "quarter": {
+      "hours": 180,
+      "tasks": 250,
+      "streak": 14,
+      "score": 80,
+      "bars": [60, 58, 65, 72, 68, 75, 80],
+      "barLabels": ["W1", "W2", "W3", "W4", "W5", "W6", "W7"]
+    },
+    "year": {
+      "hours": 620,
+      "tasks": 890,
+      "streak": 14,
+      "score": 81,
+      "bars": [40, 55, 68, 72, 80, 62, 74, 85, 90, 78, 65, 71],
+      "barLabels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    }
+  },
+  "subjects": [
+    { "name": "Mathematics", "pct": 82, "color": "#00d4ff" },
+    { "name": "Physics", "pct": 67, "color": "#5c3de4" },
+    { "name": "Chemistry", "pct": 54, "color": "#06d6a0" },
+    { "name": "English", "pct": 90, "color": "#ffd166" },
+    { "name": "Computer Sci.", "pct": 76, "color": "#ff6b6b" }
+  ],
+  "sessions": [
+    { "icon": "📐", "name": "Calculus – Derivatives", "sub": "Mathematics", "time": "Today, 2:30 PM", "dur": "1h 20m", "score": 88, "col": "#00d4ff" },
+    { "icon": "⚛️", "name": "Quantum Mechanics Basics", "sub": "Physics", "time": "Today, 11:00 AM", "dur": "45m", "score": 74, "col": "#5c3de4" },
+    { "icon": "🧪", "name": "Organic Chemistry", "sub": "Chemistry", "time": "Yesterday, 4:00 PM", "dur": "1h 5m", "score": 61, "col": "#06d6a0" },
+    { "icon": "💻", "name": "Data Structures – Trees", "sub": "Computer Sci.", "time": "Yesterday, 7:30 PM", "dur": "2h", "score": 92, "col": "#ff6b6b" },
+    { "icon": "📖", "name": "Essay Writing Techniques", "sub": "English", "time": "2 days ago, 3:00 PM", "dur": "40m", "score": 95, "col": "#ffd166" }
+  ]
+}

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Study Companion</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f8fafc;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 50px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* LOGO */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+}
+
+/* CENTER NAV */
+.nav-center {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-center a {
+    text-decoration: none;
+    color: #475569;
+    font-weight: 500;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* ACTIVE LINK */
+.nav-center a.active {
+    color: #6366f1;
+}
+
+/* UNDERLINE HOVER */
+.nav-center a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: #6366f1;
+    transition: 0.3s;
+}
+
+.nav-center a:hover::after {
+    width: 100%;
+}
+
+.nav-center a:hover {
+    color: #6366f1;
+}
+
+/* RIGHT BUTTONS */
+.nav-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.theme-toggle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: #1e293b;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.light .theme-toggle {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+.btn {
+    padding: 8px 18px;
+    border-radius: 999px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.login {
+    background: black;
+    color: white;
+}
+
+.signup {
+    background: black;
+    color: white;
+}
+
+.login:hover,
+.signup:hover {
+    background: #1f2937;
+}
+
+#profileSection {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 48px;
+    background: white;
+    color: #1f2937;
+    padding: 10px;
+    border-radius: 12px;
+    min-width: 210px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.16);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: all 0.25s ease;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.dropdown.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown p:first-child {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.dropdown p:nth-child(2) {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.dropdown::before {
+    content: "";
+    display: block;
+    height: 1px;
+    background: #eee;
+    margin: 8px 0;
+}
+
+.dropdown button {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #ef4444;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.dropdown button:hover {
+    background: #d23a3a;
+}
+
+/* HAMBURGER */
+.hamburger {
+    display: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* MOBILE MENU */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #eee;
+}
+
+.mobile-menu a {
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.mobile-menu a:hover {
+    background: #f1f5f9;
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* Features Grid */
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 40px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.cta {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.cta button {
+    padding: 12px 25px;
+    border: none;
+    background: #6366f1;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cta button:hover {
+    background: #4f46e5;
+}
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .nav-center {
+        display: none;
+    }
+
+    .nav-right {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .mobile-menu.show {
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 12px 16px;
+    }
+
+    .logo span {
+        font-size: 16px;
+    }
+
+    .hero h1 {
+        font-size: 30px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        flex-wrap: wrap;
+        align-items: start;
+    }
+
+    .theme-toggle,
+    .hamburger {
+        margin-top: 8px;
+    }
+
+    .hero {
+        padding: 45px 12px;
+    }
+
+    .cta {
+        padding: 40px 12px;
+    }
+}
+
+body.light {
+    background: #f8fafc;
+    color: #1f2937;
+}
+
+body.light .navbar,
+body.light .hero,
+body.light .card,
+body.light .features,
+body.light .mobile-menu {
+    background: #fff;
+    color: #1e293b;
+}
+
+body.light .btn {
+    background: #e5e7eb;
+    color: #1f2937;
+}
+
+body.light .dropdown {
+    background: #fff;
+}
+
+/* DEMO CONTENT */
+.hero {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    color: #64748b;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+h3{
+    color: black;
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <div class="logo">
+    <img src="logo.png" alt="logo">
+    <span>AI-Study Companion</span>
+</div>
+
+    <nav class="nav-center">
+       <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="planner.html">Study Planner</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="chatbot.html">Chatbot</a>
+    </nav>
+
+    <div class="nav-right" id="authSection">
+        <a href="login.html" class="btn login">Login</a>
+        <a href="signup.html" class="btn signup">Sign Up</a>
+    </div>
+
+    <div id="profileSection" style="display:none; position:relative;">
+        <div id="profileIcon" class="avatar">U</div>
+        <div id="dropdownMenu" class="dropdown">
+            <p id="userName">User Name</p>
+            <p id="userEmail">user@example.com</p>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </div>
+
+    <button class="hamburger" aria-label="Toggle menu">☰</button>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="features.html">Features</a>
+    <a href="planner.html">Study Planner</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="chatbot.html">Chatbot</a>
+    <a href="login.html" class="auth-mobile">Login</a>
+    <a href="signup.html" class="auth-mobile">Sign Up</a>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+    <h1>Powerful Features for Smart Learning</h1>
+    <p>Everything you need to plan, study, and succeed — powered by AI.</p>
+</div>
+
+<!-- Features -->
+<div class="features">
+
+    <a href="chatbot.html"><div class="card">
+        <div class="icon">🤖</div>
+        <h3>AI Chat Assistant</h3>
+        <p>Ask questions, solve doubts, and get instant explanations anytime.</p>
+    </div></a>
+
+    <a href="planner.html">
+            <div class="card">
+        <div class="icon">📅</div>
+        <h3>Smart Study Planner</h3>
+        <p>Automatically generate study schedules based on your goals.</p>
+    </div>
+    </a>
+
+    <div class="card">
+        <div class="icon">📊</div>
+        <h3>Progress Tracking</h3>
+        <p>Track your daily study performance and stay consistent.</p>
+    </div>
+
+    <div class="card">
+        <div class="icon">🧠</div>
+        <h3>Personalized Learning</h3>
+        <p>AI adapts to your learning speed and style.</p>
+    </div>
+
+    <div class="card">
+        <div class="icon">⏰</div>
+        <h3>Focus Timer</h3>
+        <p>Boost productivity with Pomodoro-based study sessions.</p>
+    </div>
+
+    <div class="card">
+        <div class="icon">📚</div>
+        <h3>Notes Generator</h3>
+        <p>Create clean, structured notes instantly from your topics.</p>
+    </div>
+
+</div>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Start Studying Smarter Today 🚀</h2>
+    <br>
+    <a href="planner.html"><button>Try Now</button></a>
+</div>
+
+
+<script>
+function toggleMenu() {
+    document.getElementById("mobileMenu").classList.toggle("show");
+}
+
+const user = JSON.parse(localStorage.getItem("currentUser"));
+const authSection = document.getElementById("authSection");
+const profileSection = document.getElementById("profileSection");
+const profileIcon = document.getElementById("profileIcon");
+const dropdownMenu = document.getElementById("dropdownMenu");
+const userNameEl = document.getElementById("userName");
+const userEmailEl = document.getElementById("userEmail");
+const logoutBtn = document.getElementById("logoutBtn");
+const authMobileLinks = document.querySelectorAll(".auth-mobile");
+
+if (user) {
+    authSection.style.display = "none";
+    profileSection.style.display = "flex";
+    userNameEl.textContent = user.name;
+    userEmailEl.textContent = user.email;
+    profileIcon.textContent = user.name.charAt(0).toUpperCase();
+
+    profileIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle("show");
+    });
+
+    dropdownMenu.addEventListener("click", (e) => e.stopPropagation());
+
+    document.addEventListener("click", () => dropdownMenu.classList.remove("show"));
+
+    logoutBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        localStorage.removeItem("currentUser");
+        window.location.href = "login.html";
+    });
+
+    authMobileLinks.forEach(link => link.style.display = "none");
+} else {
+    authSection.style.display = "flex";
+    profileSection.style.display = "none";
+    authMobileLinks.forEach(link => link.style.display = "block");
+}
+
+// mobile nav toggle
+const mobileHamburger = document.querySelector('.hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+if (mobileHamburger && mobileMenu) {
+    mobileHamburger.addEventListener('click', () => {
+        mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+}
+
+</script>
+<script src="theme.js"></script>
+</body>
+</html>

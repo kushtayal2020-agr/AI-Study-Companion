@@ -1,0 +1,355 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+/* Layout */
+.dashboard {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 230px;
+    height: 100vh;
+    background: #1e1e2f;
+    color: white;
+    padding: 20px;
+}
+
+.logo {
+    margin-bottom: 30px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.sidebar ul li:hover {
+        background: #667eea;
+}
+
+/* Main */
+.main {
+    flex: 1;
+    padding: 30px;
+    max-width: 1100px;
+}
+
+/* Topbar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+
+    padding: 10px 20px;
+    border-radius: 12px;
+}
+
+.profile {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 600;
+    font-size: 16px;
+
+     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.profile:hover {
+    transform: scale(1.1);
+}
+/* Cards */
+.cards {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+        transform: translateY(-8px) scale(1.02);
+}
+
+.card button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+
+#dashboard{
+
+    background-color: #667eea;
+    color: white;
+}
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    min-width: 200px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.dropdown.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Name */
+.dropdown p:first-child {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Email */
+.dropdown p:nth-child(2) {
+    font-size: 13px;
+    color: gray;
+    margin-bottom: 10px;
+}
+
+
+.dropdown::before {
+    content: "";
+    display: block;
+    height: 1px;
+    background: #eee;
+    margin: 10px 0;
+}
+    
+
+
+.dropdown button {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    background: #ff4d4d;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dropdown button:hover {
+    background: #e60000;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+}
+.user-info p:first-child {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+}
+
+.user-info p:last-child {
+    font-size: 13px;
+    color: gray;
+}
+/* =========================
+   TABLET (<=1024px)
+========================= */
+@media (max-width: 1024px) {
+    .main {
+        padding: 20px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .topbar {
+        flex-direction: row;
+        gap: 10px;
+    }
+}
+
+
+/* =========================
+   MOBILE (<=768px)
+========================= */
+@media (max-width: 768px) {
+
+    body {
+        height: auto;
+    }
+
+    .dashboard {
+        flex-direction: column;
+    }
+
+    /* Hide sidebar */
+    .sidebar {
+        display: none;
+    }
+
+    /* Main full width */
+    .main {
+        width: 100%;
+        padding: 15px;
+    }
+
+    /* Topbar stacked */
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    /* Cards single column */
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    /* Card spacing */
+    .card {
+        padding: 15px;
+    }
+
+    /* Profile + user */
+    .user {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* Dropdown fix */
+    .dropdown {
+        right: 10px;
+        top: 60px;
+        min-width: 180px;
+    }
+}
+
+
+/* =========================
+   SMALL MOBILE (<=480px)
+========================= */
+@media (max-width: 480px) {
+
+    .topbar h2 {
+        font-size: 18px;
+    }
+
+    .theme-toggle {
+        background: rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    body.light .theme-toggle {
+        background: rgba(0,0,0,0.05);
+        color: #1f2937;
+    }
+
+    .profile,
+    .avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .card h3 {
+        font-size: 16px;
+    }
+
+    .card p {
+        font-size: 14px;
+    }
+
+    .card button {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}

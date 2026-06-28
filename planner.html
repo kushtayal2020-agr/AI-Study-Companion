@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Companion</title>
+    <link rel="stylesheet" href="planner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="logo.png" alt="AI Study Companion Logo" class="logo-img">
+                        <p>AI Study Companion</p>
+                    </a>
+                </div>
+
+                <div class="menu">
+                    <a href="index.html">Home</a>
+                    <a href="features.html">Features</a>
+                    <a href="planner.html">Study Planner</a>
+                    <a href="progress.html">Progress</a>
+                    <a href="dashboard.html">Dashboard</a>
+                    <a href="chatbot.html">Chatbot</a>
+                </div>
+
+                <div class="auth" id="authSection">
+                    <a href="login.html">Login</a>
+                    <a href="signup.html">Sign Up</a>
+                </div>
+
+                <div id="profileSection" style="display:none; position:relative;">
+                    <div id="profileIcon" class="avatar"></div>
+                    <div id="dropdownMenu" class="dropdown">
+                        <div class="user-info">
+                            <p id="userName"></p>
+                            <p id="userEmail"></p>
+                            <button id="logoutBtn">Logout</button>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="theme-toggle" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="left-column">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon purple"><i class="fas fa-fire"></i></div>
+                        <div class="stat-info"><h3 id="stat-streak">0d</h3><p>Streak</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="stat-focus">0m</h3><p>Focus Time</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pink"><i class="fas fa-brain"></i></div>
+                        <div class="stat-info"><h3 id="stat-sessions">0</h3><p>Sessions</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon indigo"><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-info"><h3 id="stat-tasks">0</h3><p>Tasks Done</p></div>
+                    </div>
+                </div>
+
+                <div class="glass-card tasks-section">
+                    <div class="section-header">
+                        <h2>Tasks</h2>
+                        <button class="btn-primary" id="newTaskBtn" aria-label="Add new task">+ New Task</button>
+                    </div>
+
+                    <!-- Inline task input (hidden by default) -->
+                    <div class="task-input-row" id="taskInputRow" style="display:none;">
+                        <input type="text" id="taskInput" class="task-input" placeholder="What are you studying?" maxlength="60" />
+                        <button class="btn-confirm" id="confirmTaskBtn" aria-label="Confirm task"><i class="fas fa-check"></i></button>
+                        <button class="btn-cancel" id="cancelTaskBtn" aria-label="Cancel"><i class="fas fa-times"></i></button>
+                    </div>
+
+                    <div class="progress-container">
+                        <span id="progressText">0/0 done</span>
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+                        <span id="progressPercent">0%</span>
+                    </div>
+
+                    <div class="task-list" id="taskList">
+                        <!-- Tasks rendered here by JS -->
+                        <p class="empty-state" id="emptyState">No tasks yet. Add one above!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="glass-card timer-card">
+                    <p class="quote" id="quoteText">"Your future self will thank you."</p>
+                    <div class="timer-modes">
+                        <button class="mode-btn active" data-mode="focus" aria-pressed="true">Focus</button>
+                        <button class="mode-btn" data-mode="break" aria-pressed="false">Break</button>
+                    </div>
+                    <div class="timer-display">
+                        <div class="timer-circle">
+                            <svg class="timer-ring" viewBox="0 0 200 200">
+                                <circle class="ring-bg" cx="100" cy="100" r="88"/>
+                                <circle class="ring-progress" id="timerRing" cx="100" cy="100" r="88"/>
+                            </svg>
+                            <div class="timer-inner">
+                                <span class="time" id="timerDisplay">25:00</span>
+                                <span class="label" id="timerLabel">FOCUS TIME</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timer-controls">
+                        <button class="control-btn" id="resetBtn" title="Reset timer" aria-label="Reset timer"><i class="fas fa-undo"></i></button>
+                        <button class="play-btn" id="playBtn" aria-label="Start timer"><i class="fas fa-play" id="playIcon"></i></button>
+                        <button class="control-btn" id="breakBtn" title="Quick break" aria-label="Take a break"><i class="fas fa-coffee"></i></button>
+                    </div>
+                    <div class="session-log" id="sessionLog"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+    <script src="auth.js"></script>
+    <script src="planner.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>

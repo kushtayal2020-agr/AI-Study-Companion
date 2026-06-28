@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(express.static('.')); // Serve static files from current directory
 
 async function getAIReply(systemPrompt, history, userMessage) {
+    console.log("API Key Present:", !!OPENROUTER_API_KEY);
+
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -28,10 +30,13 @@ async function getAIReply(systemPrompt, history, userMessage) {
         })
     });
 
+    console.log("OpenRouter Status:", response.status);
+
     const data = await response.json();
+    console.log("OpenRouter Response:", JSON.stringify(data, null, 2));
+
     return data.choices?.[0]?.message?.content || "No response from AI";
 }
-
 app.post("/chat", async (req, res) => {
 
 

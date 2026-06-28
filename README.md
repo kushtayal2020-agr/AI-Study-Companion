@@ -2,7 +2,7 @@
 
 ## 📌 Description
 
-AI Study Companion is a web-based academic productivity platform developed as a Project-Based Learning (PBL) project. It helps students manage their studies efficiently by combining planning, note-taking, progress tracking, and AI-powered assistance in one platform.
+AI Study Companion is a web-based academic productivity platform developed as a project. It helps students manage their studies efficiently by combining planning, note-taking, progress tracking, and AI-powered assistance in one platform.
 
 ---
 
